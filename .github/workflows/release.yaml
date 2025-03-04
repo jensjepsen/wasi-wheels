@@ -31,7 +31,7 @@ jobs:
           toolchain: stable
           profile: minimal
           override: true
-          target: wasm32-wasi
+          target: wasm32-wasip1
 
       - name: Cache CPython
         id: cache-cpython-wasi
