@@ -46,7 +46,7 @@ jobs:
         run: make -j4
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
             name: wasi-wheels
             path: build/*-wasi.tar.gz
@@ -58,33 +58,3 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/*-wasi.tar.gz
           tag: ${{ github.ref }}
-
-  update_canary_release:
-    name: Update canary release
-    needs: release
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download release assets
-        uses: actions/download-artifact@v3
-        with:
-            name: wasi-wheels
-
-      - name: Delete canary tag
-        uses: dev-drprasad/delete-tag-and-release@v0.2.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: canary
-
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Development Build"
-          files: |
-            *.tar.gz
-            *.txt
-            *.whl
-        if: github.ref == 'refs/heads/main'
