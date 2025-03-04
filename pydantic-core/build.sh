@@ -37,5 +37,5 @@ export CARGO_BUILD_TARGET=wasm32-wasip1
 cd src
 rm -rf build
 mkdir build
-maturin build --release --target wasm32-wasi --out dist -i python3.12 -vvv
+maturin build --release --target wasm32-wasip1 --out dist -i python3.12 -vvv
 wheel unpack --dest build dist/*.whl 
